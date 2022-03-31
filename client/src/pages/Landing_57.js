@@ -18,7 +18,7 @@ export const Landing_57 = () => {
             Job <span>Tracking</span> App
           </h1>
           <p>Lorem</p>
-          <a href="#" className="btn btn-hero">
+          <a href="/register" className="btn btn-hero">
             Login /Register
           </a>
         </div>

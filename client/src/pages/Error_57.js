@@ -1,6 +1,5 @@
 import React from "react";
 import img from "../assets/images/not-found.svg";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Wrapper from "../assets/wrapper/Error_57";
 
