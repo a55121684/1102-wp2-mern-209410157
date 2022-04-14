@@ -15,12 +15,11 @@ export const Register_57 = () => {
   const [values, setValues] = useState(initialState);
 
   const handleChange = (e) => {
-    console.log("e.target", e.target);
+    setValues({ ...values, [e.target.name]: e.target.value });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("e.target", e.target);
   };
 
   return (
@@ -33,7 +32,7 @@ export const Register_57 = () => {
           type="text"
           name="name"
           value={values.name}
-          onChange={handleChange}
+          handleChange={handleChange}
           className="form-input"
         />
         {/* email input */}
@@ -41,7 +40,7 @@ export const Register_57 = () => {
           type="email"
           name="email"
           value={values.email}
-          onChange={handleChange}
+          handleChange={handleChange}
           className="form-input"
         />
         {/* password input */}
@@ -49,7 +48,7 @@ export const Register_57 = () => {
           type="password"
           name="password"
           value={values.password}
-          onChange={handleChange}
+          handleChange={handleChange}
           className="form-input"
         />
 
