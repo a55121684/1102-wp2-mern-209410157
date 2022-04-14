@@ -2,17 +2,20 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Logo_57, FormRow_57 as FormRow_57 } from "../components";
 import Wrapper from "../assets/wrapper/Register_57";
+import { useAppContext } from "../context/appContext_57";
+import Alert_57 from "../components/Alert_57";
 
 const initialState = {
   name: "",
   email: "",
   password: "",
   isMember: true,
-  showAlter: false,
+  showAlert: false,
 };
 
 export const Register_57 = () => {
   const [values, setValues] = useState(initialState);
+  const { showAlert, displayAlert } = useAppContext();
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -20,6 +23,11 @@ export const Register_57 = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    const { email, password } = values;
+    if (!email || !password) {
+      displayAlert();
+      return;
+    }
   };
 
   return (
@@ -27,6 +35,7 @@ export const Register_57 = () => {
       <form className="form" onSubmit={onSubmit}>
         <Logo_57 />
         <h3>Register</h3>
+        {showAlert && <Alert_57 />}
         {/*name input*/}
         <FormRow_57
           type="text"
