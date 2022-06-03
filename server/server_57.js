@@ -21,7 +21,11 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
   // throw Error("test");
-  res.send("Welcome");
+  res.json({ msg: "Welcome -- 游志信 209410157" });
+});
+
+app.get("/api/v1", (req, res) => {
+  res.json({ msg: "API v1 -- 游志信 209410157" });
 });
 
 app.use("/api/v1/auth_57", authRoutes_57);
@@ -31,9 +35,12 @@ app.use(errorHandlerMiddleware_57);
 
 const start = async () => {
   try {
-    await connectDB(process.env.MONGO_LOCAL_URL).then(() => {
+    await connectDB(process.env.MONGO_CLOUD_URL).then(() => {
       console.log("Success Connect");
     });
+    // await connectDB(process.env.MONGO_LOCAL_URL).then(() => {
+    //   console.log("Success Connect");
+    // });
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
     });
