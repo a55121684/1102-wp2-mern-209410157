@@ -1,4 +1,13 @@
-import { CLEAR_ALERT, DISPLAY_ALERT } from "./action_57";
+import {
+  CLEAR_ALERT,
+  DISPLAY_ALERT,
+  REGISTER_USER_BEGIN,
+  REGISTER_USER_SUCCESS,
+  REGISTER_USER_ERROR,
+  LOGIN_USER_BEGIN,
+  LOGIN_USER_SUCCESS,
+  LOGIN_USER_ERROR,
+} from "./action_57";
 
 const reducer_57 = (state, action) => {
   if (action.type === DISPLAY_ALERT) {
@@ -15,6 +24,56 @@ const reducer_57 = (state, action) => {
       showAlert: false,
       alertType: "",
       alertText: "",
+    };
+  }
+
+  if (action.type === REGISTER_USER_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+  if (action.type === REGISTER_USER_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertText: action.payload.alertText,
+      alertType: "success",
+      user: action.payload.user,
+      token: action.payload.token,
+      location: action.payload.location,
+    };
+  }
+  if (action.type === REGISTER_USER_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
+    };
+  }
+
+  if (action.type === LOGIN_USER_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+  if (action.type === LOGIN_USER_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertText: action.payload.alertText,
+      alertType: "success",
+      user: action.payload.user,
+      token: action.payload.token,
+      location: action.payload.location,
+    };
+  }
+  if (action.type === LOGIN_USER_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
     };
   }
 

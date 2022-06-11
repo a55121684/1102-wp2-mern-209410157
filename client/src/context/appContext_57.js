@@ -1,6 +1,15 @@
 import React, { useReducer, useContext } from "react";
 import reducer_57 from "./reducer_57";
-import { CLEAR_ALERT, DISPLAY_ALERT } from "./action_57";
+import {
+  CLEAR_ALERT,
+  DISPLAY_ALERT,
+  REGISTER_USER_BEGIN,
+  REGISTER_USER_SUCCESS,
+  REGISTER_USER_ERROR,
+  LOGIN_USER_BEGIN,
+  LOGIN_USER_SUCCESS,
+  LOGIN_USER_ERROR,
+} from "./action_57";
 import axios from "axios";
 
 const initialState = {
@@ -8,6 +17,9 @@ const initialState = {
   showAlert: false,
   alertText: "",
   alertType: "",
+  user: "",
+  token: "",
+  location: "",
 };
 
 const AppContext_57 = React.createContext();
@@ -26,18 +38,84 @@ const AppProvider_57 = ({ children }) => {
     }, 3000);
   };
 
+  const axiosRegister = async ({ currentUser, endPoint, alertText }) => {
+    try {
+      const { data } = await axios.post(
+        "/api/v1/auth_57/register_57",
+        currentUser
+      );
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const axiosLogin = async ({ currentUser, endPoint, alertText }) => {
+    try {
+      const { data } = await axios.post(
+        "/api/v1/auth_57/login_57",
+        currentUser
+      );
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const registerUser = async ({ currentUser, endPoint, alertText }) => {
-    console.log(endPoint);
-    console.log(currentUser);
-    await axios.post(
-      `http://localhost:5000/api/v1/auth_57/register_57`,
-      currentUser
-    );
+    dispatch({ type: REGISTER_USER_BEGIN });
+    try {
+      const data = await axiosRegister({
+        currentUser,
+        endPoint,
+        alertText,
+      });
+
+      console.log("register data", data);
+      const { user, token, location } = data;
+      dispatch({
+        type: REGISTER_USER_SUCCESS,
+        payload: { user, token, location, alertText },
+      });
+    } catch (error) {
+      console.log(error.response);
+
+      dispatch({
+        type: REGISTER_USER_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+
+  const loginUser = async ({ currentUser, endPoint, alertText }) => {
+    // dispatch({ type: LOGIN_USER_BEGIN });
+    try {
+      const data = await axiosLogin({
+        currentUser,
+        endPoint,
+        alertText,
+      });
+
+      console.log("login data", data);
+      const { user, token, location } = data;
+      console.log(user, token, location);
+      dispatch({
+        type: LOGIN_USER_SUCCESS,
+        payload: { user, token, location, alertText },
+      });
+    } catch (error) {
+      dispatch({
+        type: LOGIN_USER_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
   };
 
   return (
     <AppContext_57.Provider
-      value={{ ...state, displayAlert, clearAlert, registerUser }}
+      value={{ ...state, displayAlert, clearAlert, registerUser, loginUser }}
     >
       {children}
     </AppContext_57.Provider>

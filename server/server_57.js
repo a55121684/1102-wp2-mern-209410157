@@ -35,7 +35,7 @@ app.use(errorHandlerMiddleware_57);
 
 const start = async () => {
   try {
-    await connectDB(process.env.MONGO_CLOUD_URL).then(() => {
+    await connectDB(process.env.MONGO_LOCAL_URL).then(() => {
       console.log("Success Connect");
     });
     // await connectDB(process.env.MONGO_LOCAL_URL).then(() => {

@@ -4,6 +4,7 @@ import { Logo_57, FormRow_57 as FormRow_57 } from "../components";
 import Wrapper from "../assets/wrapper/Register_57";
 import { useAppContext } from "../context/appContext_57";
 import Alert_57 from "../components/Alert_57";
+import { LOGIN_USER_BEGIN } from "../context/action_57";
 
 const initialState = {
   name: "",
@@ -15,7 +16,7 @@ const initialState = {
 
 export const Register_57 = () => {
   const [values, setValues] = useState(initialState);
-  const { showAlert, displayAlert, registerUser } = useAppContext();
+  const { showAlert, displayAlert, registerUser, loginUser } = useAppContext();
 
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember });
@@ -34,7 +35,7 @@ export const Register_57 = () => {
     }
 
     const currentUser = { name, email, password };
-
+    console.log("form", currentUser);
     if (!isMember) {
       registerUser({
         currentUser,
@@ -42,6 +43,11 @@ export const Register_57 = () => {
         alertText: "User created Redirecting ...",
       });
     } else {
+      loginUser({
+        currentUser,
+        endPoint: "login_57",
+        alertText: "Login Success Redirecting ...",
+      });
     }
   };
 
