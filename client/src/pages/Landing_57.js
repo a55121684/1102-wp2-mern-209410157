@@ -17,7 +17,11 @@ export const Landing_57 = () => {
           <h1>
             Job <span>Tracking</span> App
           </h1>
-          <p>Lorem</p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
+            nobis eum temporibus tempore ad, pariatur tenetur, alias odio
+            asperiores voluptatibus sint? Aliquam aliquid commodi nulla.
+          </p>
           <a href="/register" className="btn btn-hero">
             Login /Register
           </a>

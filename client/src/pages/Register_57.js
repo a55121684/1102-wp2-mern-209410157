@@ -1,10 +1,9 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Logo_57, FormRow_57 as FormRow_57 } from "../components";
 import Wrapper from "../assets/wrapper/Register_57";
 import { useAppContext } from "../context/appContext_57";
 import Alert_57 from "../components/Alert_57";
-import { LOGIN_USER_BEGIN } from "../context/action_57";
 
 const initialState = {
   name: "",
@@ -16,7 +15,9 @@ const initialState = {
 
 export const Register_57 = () => {
   const [values, setValues] = useState(initialState);
-  const { showAlert, displayAlert, registerUser, loginUser } = useAppContext();
+  const navigate = useNavigate();
+  const { user, isLoading, showAlert, displayAlert, registerUser, loginUser } =
+    useAppContext();
 
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember });
@@ -50,6 +51,14 @@ export const Register_57 = () => {
       });
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+    }
+  }, [user, navigate]);
 
   return (
     <Wrapper>
